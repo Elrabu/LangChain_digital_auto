@@ -1,0 +1,43 @@
+1. Install Velocitas CLI (one-time, system-wide)
+
+LATEST=$(curl -s https://api.github.com/repos/eclipse-velocitas/cli/releases/latest | jq -r .tag_name)
+sudo curl -L "https://github.com/eclipse-velocitas/cli/releases/download/${LATEST}/velocitas-linux-x64" \
+     -o /usr/local/bin/velocitas
+sudo chmod +x /usr/local/bin/velocitas
+velocitas --version
+
+2. Initialize the project from the GitHub template
+
+mkdir -p ~/projects && cd ~/projects
+
+velocitas init -p vehicle-app-python-template -n SmartWiperApp
+
+Behind the scenes, this clones:
+
+    Template repo: https://github.com/eclipse-velocitas/vehicle-app-python-template
+    Packages declared in .velocitas.json → cached under ~/.velocitas/packages/
+
+These packages contain the runtime-local component, which is what velocitas exec runtime-local up invokes — it orchestrates Docker to start:
+
+    vehicledatabroker (KUKSA Databroker)
+    mockservice (Mock Provider)
+    mqtt-broker (Mosquitto)
+
+3. Enter the project & sync packages
+
+cd SmartWiperApp
+velocitas init     # idempotent, pulls all referenced packages
+velocitas sync     # syncs .github, devcontainer, scripts from packages
+
+4. Start the runtime
+
+cd ~/projects/SmartWiperApp
+velocitas exec runtime-local up
+
+→ This is what spins up your three containers (vehicledatabroker, mockservice, mqtt-broker).
+Key files inside SmartWiperApp/
+File 	Purpose
+.velocitas.json 	Declares template + package versions (the contract)
+app/AppManifest.json 	VSS signal interface declaration
+app/src/main.py 	Vehicle App entry point
+.devcontainer/ 	Dev Container definition (optional path)
