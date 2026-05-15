@@ -1,0 +1,13 @@
+# 1. Clone the template repo
+git clone https://github.com/eclipse-velocitas/vehicle-app-python-template.git SmartWiperApp
+cd SmartWiperApp
+
+# 2. Remove upstream git history (optional, clean slate)
+rm -rf .git
+git init
+
+# 3. Now init pulls the packages declared in .velocitas.json
+velocitas init
+
+# 4. Sync devcontainer / scripts / workflows
+velocitas sync
