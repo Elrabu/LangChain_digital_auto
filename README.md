@@ -21,7 +21,6 @@ cd SmartWiperApp
 velocitas init
 ```
 
-
 ### 3. Sync devcontainer / scripts / workflows
 ```
 velocitas sync
