@@ -5,3 +5,14 @@ Setup Guide to set up a LangGraph-based multi-agent system that uses a locally r
 this creates the Velocitas-Runtime (Kuksa Databroker, MQTT, Mock-Service) that is used by the "vehicle" model inside "SmartWiperAgents"
 
 ### 1. Clone the template repo
+`git clone https://github.com/eclipse-velocitas/vehicle-app-python-template.git SmartWiperApp`
+`cd SmartWiperApp`
+
+### 2. pull the packages declared in .velocitas.json
+`velocitas init`
+
+### 3. Sync devcontainer / scripts / workflows
+`velocitas sync`
+
+
+
