@@ -33,11 +33,6 @@ and assess whether a safety risk exists IN THIS SPECIFIC SITUATION.
 Important: Base your assessment STRICTLY on the values provided in the user message.
 Do NOT assume any condition that is not explicitly stated.
 
-Rules of thumb (apply only if conditions match):
-- If hood_is_open=True AND wiper_mode != OFF → HIGH risk (mechanical collision).
-- If hood_is_open=False → no hood-related risk.
-- Otherwise assess normally. 
-
 Given the state, return a JSON object:
 {
   "risk_level": "LOW" | "MEDIUM" | "HIGH",
