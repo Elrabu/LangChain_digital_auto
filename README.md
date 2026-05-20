@@ -6,6 +6,7 @@ Setup Guide to set up a LangGraph-based multi-agent system that uses a locally r
  ├── SmartWiperAgents
  ├── SmartWiperApp
 ```
+*Image of technical Flow here*
 
 ## Velocitas Runtime Setup
 this creates the Velocitas-Runtime (Kuksa Databroker, MQTT, Mock-Service) that is used by the "vehicle" model inside "SmartWiperAgents"
@@ -31,7 +32,9 @@ velocitas sync
 velocitas exec runtime-local up
 ```
 
+## SmartWiperAgents Setup
 
+SmartWiperAgents is a multi-agent system using LangGraph that responds to events from the Velocitas Vehicle Runtime and makes and decides on the windshield wiper mode based on the input.
 
 
 
