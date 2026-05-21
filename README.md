@@ -81,12 +81,11 @@ pip install -r requirements.txt
 to define the directories as packages and allow import:
 ```
 touch app/__init__.py
+touch agents/__init__.py
+touch graph/__init__.py
 ```
-agents
-graph
 
-
-
+### Start SmartWiperApp
 
 
 
