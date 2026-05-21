@@ -85,7 +85,7 @@ touch agents/__init__.py
 touch graph/__init__.py
 ```
 
-### Start SmartWiper Vehicle App
+### 6. start SmartWiper Vehicle App
 to start the Velocitas-Vehicle-App run from ```/SmartWiperAgents```
 ```
 python -m app.SmartWiper
