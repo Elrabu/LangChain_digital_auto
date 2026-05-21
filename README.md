@@ -111,6 +111,6 @@ setValue Vehicle.Body.Hood.IsOpen true
 
 ## Logging with LangSmith Studio Setup
 
-Prerequisite: Have a account on [smith.langchain.com](smith.langchain.com)
+Prerequisite: Have a account on [smith.langchain.com](https://smith.langchain.com/)
 
 
