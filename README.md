@@ -72,6 +72,16 @@ to activate the environment for the rest of the setup
 source .venv/bin/activate
 ```
 
+### 4. install requirements
+```
+pip install -r requirements.txt
+```
+
+### 5. add __init.py__ 
+
+```
+touch app/__init__.py
+```
 
 
 
