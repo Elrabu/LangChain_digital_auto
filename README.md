@@ -78,10 +78,13 @@ pip install -r requirements.txt
 ```
 
 ### 5. add __init.py__ 
-
+to define the directories as packages and allow import:
 ```
 touch app/__init__.py
 ```
+agents
+graph
+
 
 
 
