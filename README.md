@@ -85,7 +85,13 @@ touch agents/__init__.py
 touch graph/__init__.py
 ```
 
-### 6. start SmartWiper Vehicle App
+### 6. export vehicle module
+in the virtual environment
+```
+export PYTHONPATH="/your/path/to/the/project/SmartWiperApp/gen/vehicle_model:$PYTHONPATH"
+```
+
+### 7. start SmartWiper Vehicle App
 to start the Velocitas-Vehicle-App run from ```/SmartWiperAgents```
 ```
 python -m app.SmartWiper
