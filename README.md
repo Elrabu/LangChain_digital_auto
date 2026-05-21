@@ -85,12 +85,29 @@ touch agents/__init__.py
 touch graph/__init__.py
 ```
 
-### Start SmartWiperApp
+### Start SmartWiper Vehicle App
 to start the Velocitas-Vehicle-App run from ```/SmartWiperAgents```
 ```
 python -m app.SmartWiper
 ``` 
 
+## KUKSA client setup
+to change the standart values of the Velociats Runtime while is is running, install the KUKSA client:
+```
+pip install kuksa-client
+```
+
+start the KUKSA client:
+```
+kuksa-client grpc://127.0.0.1:55555
+```
+
+to change the standart values use this:
+```
+setValue Vehicle.Speed 0
+setValue Vehicle.Body.Windshield.Front.Wiping.Mode "MEDIUM"
+setValue Vehicle.Body.Hood.IsOpen true
+```
 
 
 
