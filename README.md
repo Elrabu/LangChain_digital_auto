@@ -109,6 +109,8 @@ setValue Vehicle.Body.Windshield.Front.Wiping.Mode "MEDIUM"
 setValue Vehicle.Body.Hood.IsOpen true
 ```
 
+## Logging with LangSmith Studio Setup
 
+Prerequisite: Have a account on [smith.langchain.com](smith.langchain.com)
 
 
