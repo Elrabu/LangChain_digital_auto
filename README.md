@@ -109,8 +109,68 @@ setValue Vehicle.Body.Windshield.Front.Wiping.Mode "MEDIUM"
 setValue Vehicle.Body.Hood.IsOpen true
 ```
 
-## Logging with LangSmith Studio Setup
+## Logging with LangGraph Studio Setup
 
 Prerequisite: Have a account on [smith.langchain.com](https://smith.langchain.com/)
+
+### 1. install LangGraph CLI
+```
+pip install -U "langgraph-cli[inmem]"
+```
+
+### 2. If Ollama is not running, load and run Ollama
+
+```
+ollama pull llama3.1:8b
+ollama serve
+```
+
+### 3. Setup Environment Variables ``.env``` in project root
+
+```
+# LangSmith Tracing
+LANGSMITH_API_KEY=lsv2_pt_xxxxxxxxxxxxxxxxxxxx #from Langsmith website
+LANGSMITH_TRACING=true
+LANGSMITH_PROJECT=SmartWiperAgents
+LANGSMITH_ENDPOINT=https://api.smith.langchain.eu #must match the website where the Langsmith account is registered
+
+# Ollama
+OLLAMA_MODEL=llama3.1:8b
+```
+if outside of the EU, use ```LANGSMITH_ENDPOINT=https://api.smith.langchain.com```
+The API key can be generate under settings -> API keys
+
+### 4. configure langgraph.json in project root
+
+```
+{
+  "dependencies": ["."],
+  "graphs": {
+    "smart_wiper_agents": "./fa_lg/langgraph_entry.py:graph"
+  },
+  "env": ".env",
+  "python_version": "3.11"
+}
+```
+
+### 5. install dependencies
+if not already installed in ```requirements.txt```
+```
+pip install -U \
+  "langgraph-cli[inmem]" \
+  langgraph \
+  langchain-core \
+  langchain-ollama \
+  langsmith \
+  python-dotenv
+```
+
+### 6. start LangGraph Studio
+```
+langgraph dev
+```
+
+
+
 
 
