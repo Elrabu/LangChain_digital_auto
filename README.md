@@ -63,6 +63,16 @@ pull the Ollama 3.1:8b model
 ollama pull llama3.1:8b
 ```
 
+### 3. Setup virtual environment
+```
+python3.12 -m venv .venv
+```
+to activate the environment for the rest of the setup
+```
+source .venv/bin/activate
+```
+
+
 
 
 
