@@ -35,6 +35,34 @@ velocitas exec runtime-local up
 
 SmartWiperAgents is a multi-agent system using LangGraph that responds to events from the Velocitas Vehicle Runtime and makes and decides on the windshield wiper mode based on the input.
 
+### 1. Requirement checks
+
+```
+python3.12 --version
+```
+if not installed:
+```
+ sudo apt install python3.12
+```
+
+### 2. Local Ollama installation
+
+install ubuntu binary and set up a system service so it can run in the background:
+```
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+start it with
+```
+ollama serve
+```
+
+pull the Ollama 3.1:8b model
+
+```
+ollama pull llama3.1:8b
+```
+
 
 
 
