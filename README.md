@@ -41,7 +41,7 @@ velocitas exec runtime-local up
 
 ## SmartWiperAgents Setup
 
-SmartWiperAgents is a multi-agent system using LangGraph that responds to events from the Velocitas Vehicle Runtime and makes and decides on the windshield wiper mode based on the input.
+SmartWiperAgents is a multi-agent system using LangGraph that responds to VSS data from the Velocitas Vehicle Runtime and decides on the windshield wiper mode based on the input.
 
 ### 1. Requirement checks
 
