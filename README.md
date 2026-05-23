@@ -3,8 +3,8 @@ Setup Guide to set up a LangGraph-based multi-agent system that uses a locally r
 
 ## Hierarchy
 ```
- ├── SmartWiperAgents
- ├── SmartWiperApp
+ ├── SmartWiperAgents <- local Langgraph agents
+ ├── SmartWiperApp <- Velocitas Runtime 
 ```
 
 ## Requirements
