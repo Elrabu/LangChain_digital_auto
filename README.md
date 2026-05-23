@@ -7,6 +7,12 @@ Setup Guide to set up a LangGraph-based multi-agent system that uses a locally r
  ├── SmartWiperApp
 ```
 
+## Requirements
+| Tool                  | Version          | Purpose                                       |
+|-----------------------|------------------|-----------------------------------------------|
+| Ubuntu / WSL2         | 24.04+           | Host OS                                       |
+| Python                | 3.12+            | LangGraph runtime                             |
+
 ## Velocitas Runtime Setup (SmartWiperApp)
 this creates the Velocitas-Runtime (Kuksa Databroker, MQTT, Mock-Service) that is used by the "vehicle" model inside "SmartWiperAgents"
 
