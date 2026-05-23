@@ -158,12 +158,13 @@ The API key can be generate under settings -> API keys
 
 ```
 {
+  "$schema": "https://langgra.ph/schema.json",
   "dependencies": ["."],
   "graphs": {
-    "smart_wiper_agents": "./fa_lg/langgraph_entry.py:graph"
+    "wiper_graph": "./graph/wiper_graph.py:graph"
   },
   "env": ".env",
-  "python_version": "3.11"
+  "python_version": "3.12"
 }
 ```
 
