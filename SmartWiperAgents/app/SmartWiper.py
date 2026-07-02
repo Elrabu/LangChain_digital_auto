@@ -1,28 +1,34 @@
 import asyncio, signal, warnings, sys
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+from timing import timer  
+from memory_tracker import memory 
+
 from velocitas_sdk.vehicle_app import VehicleApp
 from vehicle import Vehicle, vehicle
 from graph.wiper_graph import build_graph
 from agents.actuator_agent import set_vehicle
+from langchain_core.tracers.langchain import wait_for_all_tracers 
 
-class SmartWiperApp(VehicleApp):
+class SmartWiperApp(VehicleApp): #class that inherits from the VehicleApp class
 
-    def __init__(self, vehicle_client: Vehicle):
-        super().__init__()
-        self.Vehicle = vehicle_client
-        self.graph   = build_graph()
-        self._done   = asyncio.Event()
-        self._current_wiper_mode = "OFF"
-        set_vehicle(vehicle_client)
+    def __init__(self, vehicle_client: Vehicle): #constructor enables app.run() or subscription to the vehicle app
+        super().__init__() #call the base class constructor (VehicleApp)
+        self.Vehicle = vehicle_client #save the Vehicle Client as an instance attribute (connection to VehicleApp)
+        self.graph   = build_graph() #compile the LangGraph workflow
+        self._done   = asyncio.Event() #define signal (can be set or not set)
+        self._current_wiper_mode = "OFF" #set current wiper mode
+        set_vehicle(vehicle_client) #call the set_vehicle function from the "actuator_agent"
 
-    async def on_start(self):
+    async def on_start(self): #lifecacle hook that is called by the Velocitas App on startup
+        memory.start_peak_sampler() 
 
-        async def on_hood_changed(reply):
+        async def on_hood_changed(reply): #callback function, that is triggered if the hood status changes
             
-            hood_dp = reply.get(self.Vehicle.Body.Hood.IsOpen)
-            hood_open: bool = bool(hood_dp.value)
+            hood_dp = reply.get(self.Vehicle.Body.Hood.IsOpen) #extract the current data point from hood.IsOpen
+            hood_open: bool = bool(hood_dp.value) #change the data point into a python bool variable
             
+            #get current vehicle status
             mode_reply  = await self.Vehicle.Body.Windshield.Front.Wiping.Mode.get()
             speed_reply = await self.Vehicle.Speed.get()
             mode  = str(mode_reply.value) if mode_reply.value else "OFF"
@@ -30,7 +36,7 @@ class SmartWiperApp(VehicleApp):
 
             print(f"[DEBUG] hood_open={hood_open!r}  mode={mode!r}  speed={speed!r}")
 
-            initial_state = {
+            initial_state = { #set initial state for the LangGraph execution
                 "hood_is_open":       hood_open,
                 "current_wiper_mode": mode,
                 "vehicle_speed":      speed,
@@ -41,43 +47,40 @@ class SmartWiperApp(VehicleApp):
                 "next_agent":         None,
             }
 
-
             print("[Velocitas → Agents] Invoking LangGraph...")
-            final = await self.graph.ainvoke(initial_state)
+            final = await self.graph.ainvoke(initial_state) #start the LangGrah workflow asynchronous and wait for final result
 
+            timer.mark_verdict_received()
+
+            #print the content of the reasoning log:
             print("\n=== AGENT REASONING TRACE ===")
             for line in final["reasoning_log"]:
                 print(" ", line)
             print(f"  Final action: {final['decided_action']}")
             print("=============================\n")
 
-            self._done.set()
+            self._done.set() #set the done flag here as as set
         
-        #print("[Velocitas] Scheibenwischer auf MEDIUM schalten")
-        #self._current_wiper_mode = "MEDIUM"
-        #await self.Vehicle.Body.Windshield.Front.Wiping.Mode.set("MEDIUM")
-
-        #print("[Velocitas] Motorhaube öffnen")
-        #await self.Vehicle.Body.Hood.IsOpen.set(True)
-
-        await self.Vehicle.Body.Hood.IsOpen.subscribe(on_hood_changed)
+        await self.Vehicle.Body.Hood.IsOpen.subscribe(on_hood_changed) #register the VSS vehicle signal where on_hood_changed is called on changes to the signal
         print("[Velocitas] Listener registriert")
 
-        #start of the demo:
-        
+        timer.mark_startup_complete()
 
-        await self._done.wait()                # ← wartet bis Agent-Trace fertig
+        await self._done.wait()                # block asynchonous until the done flag is set
         print("[Velocitas] Demo abgeschlossen — App beendet.")
 
-        from langchain_core.tracers.langchain import wait_for_all_tracers
-        wait_for_all_tracers()
+        wait_for_all_tracers() # check that all the tracing data is correctly sent
 
-        sys.exit(0)                            # ← sauber, kein RuntimeError
+        timer.print_summary()
+        memory.print_summary()  
 
-async def main():
-    app = SmartWiperApp(vehicle)
+        sys.exit(0)                            # exit the progam clean, stopping all running threads
+
+async def main(): #
+    app = SmartWiperApp(vehicle) #create Instance of the SmartWiper App and the "vehicle" Instance
     await app.run()
 
+#get the current event loop 
 LOOP = asyncio.get_event_loop()
-LOOP.add_signal_handler(signal.SIGTERM, LOOP.stop)
-LOOP.run_until_complete(main())
+LOOP.add_signal_handler(signal.SIGTERM, LOOP.stop) #add a stop signal that can be triggered
+LOOP.run_until_complete(main()) #start the event loop so that it runs until the program finished executing
