@@ -185,6 +185,12 @@ pip install -U \
 langgraph dev
 ```
 
+## Setup benchmarking
+
+to use the benchmarking, psutil needs to be installed
+```
+pip install psutil
+```
 
 
 
