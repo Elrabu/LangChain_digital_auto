@@ -47,7 +47,7 @@ class SmartWiperApp(VehicleApp): #class that inherits from the VehicleApp class
                 "next_agent":         None,
             }
 
-            print("[Velocitas -> Agents] Invoking LangGraph...")
+            print("[Velocitas -> Agents] Invoking LangGraph")
             final = await self.graph.ainvoke(initial_state) #start the LangGrah workflow asynchronous and wait for final result
 
             timer.mark_verdict_received()
