@@ -53,14 +53,14 @@ def safety_node(state: WiperState) -> WiperState: #graph node function, that acc
         HumanMessage(content=user) #transfer the user data containing the current vehicle state
     ]).content
  
-    match = re.search(r'\{.*\}', response, re.DOTALL) #extract thefirst JSON object from the response using Regex
+    match = re.search(r'\{.*\}', response, re.DOTALL) #extract the first JSON object from the response using Regex
     data = json.loads(match.group(0)) #save found JSON Strings into a dictionary
     
     #save the state values from the LLM response into the current state
     state["safety_risk_level"]  = data["risk_level"] 
     state["safety_assessment"]  = data["assessment"]
     state["decided_action"]     = data["recommended_action"]
-    state.setdefault("reasoning_log", []).append( #create empty LOG list 
+    state.setdefault("reasoning_log", []).append( #create empty reasoning log list 
         f"[Safety] {data['risk_level']}: {data['assessment']}" #add the safety assesment
     )
     return state #return the updated state to the Graph
