@@ -2,7 +2,7 @@ from graph.state import WiperState
 
 _vehicle_ref = None # global reference to velocitas vehicle object
  
-def set_vehicle(v): #setter function to enable an injection of the vehilce object from outside the file
+def set_vehicle(v): #setter function to enable an injection of the vehicle object from outside the file
     global _vehicle_ref #access global variable
     _vehicle_ref = v #save variable v into global variable
  
