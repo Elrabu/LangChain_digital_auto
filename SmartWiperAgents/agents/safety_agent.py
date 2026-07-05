@@ -5,14 +5,14 @@ from graph.state import WiperState
 from langchain_core.callbacks import BaseCallbackHandler
 
 class LLMTap(BaseCallbackHandler): #Helper Method to log LLM Inputs and Outputs
-    def on_chat_model_start(self, serialized, messages, **kwargs):
+    def on_chat_model_start(self, serialized, messages, **kwargs): #kwargs puts all additional arguments into a dictionary, prevents problem when overriding with more arguments
         print("═══ LLM CALL ═══")
         for msg_list in messages:
             for m in msg_list: #iterate over the messages
                 print(f"[{m.type.upper()}] {m.content}") #print the message type and content
         print("════════════════")
 
-    def on_llm_end(self, response, **kwargs):
+    def on_llm_end(self, response, **kwargs): #kwargs puts all additional arguments into a dictionary, prevents problem when overriding with more arguments
         for gen in response.generations: #iterate over all generated responses
             for g in gen: #iterate over all response lines
                 print(f"[LLM REPLY] {g.text}")
