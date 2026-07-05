@@ -1,6 +1,6 @@
 from typing import TypedDict, Literal, Optional
  
-class WiperState(TypedDict): #set up the complete schema for the shared state, that is used in the Graph workflow
+class WiperState(TypedDict): #set up the complete schema for the shared state that is used in the Graph workflow
 
     #define input state variables for nodes
     hood_is_open: bool
