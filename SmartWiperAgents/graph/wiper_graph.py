@@ -28,4 +28,4 @@ def build_graph(): #function to set up the LangGraph workflow
  
     return g.compile() #compile LangGraph
 
-graph = build_graph() # Exported for LangGraph Studio
+graph = build_graph() # Export to LangGraph Studio
