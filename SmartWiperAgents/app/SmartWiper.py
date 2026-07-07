@@ -53,11 +53,11 @@ class SmartWiperApp(VehicleApp): #class that inherits from the VehicleApp class
             timer.mark_verdict_received()
 
             #print the content of the reasoning log:
-            print("\n=== AGENT REASONING TRACE ===")
+            print("\n### AGENT REASONING TRACE ###")
             for line in final["reasoning_log"]:
                 print(" ", line)
             print(f"  Final action: {final['decided_action']}")
-            print("=============================\n")
+            print("#############################\n")
 
             self.program_done.set() #set the done flag here as as set
         
